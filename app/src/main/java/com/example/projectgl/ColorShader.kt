@@ -57,16 +57,16 @@ class ColorShader(private val context: Context) {
     private fun prepareData() {
         val vertices = floatArrayOf(
             // ось X
-            -3f, 0f, 0f, 1f, 0f, 0f,
-            3f, 0f, 0f, 1f, 0f, 0f,
+            -10f, 0f, 0f, 1f, 0f, 0f,
+            10f, 0f, 0f, 1f, 0f, 0f,
 
             // ось Y
-            0f, -3f, 0f, 0f, 1f, 0f,
-            0f, 3f, 0f, 0f, 1f, 0f,
+            0f, -10f, 0f, 0f, 1f, 0f,
+            0f, 10f, 0f, 0f, 1f, 0f,
 
             // ось Z
-            0f, 0f, -3f, 0f, 0f, 1f,
-            0f, 0f, 3f, 0f, 0f, 1f,
+            0f, 0f, -10f, 0f, 0f, 1f,
+            0f, 0f, 10f, 0f, 0f, 1f,
 
             //квадрат
             0.5f, 0.5f, 0f, 1f, 0f, 0f,
@@ -103,7 +103,7 @@ class ColorShader(private val context: Context) {
         var vertices = floatArrayOf()
         val PI = 3.141592f
         var alpha = 0f
-        var beta = 0f
+        var beta: Float
         var radius = 1f
 
         while (alpha < 3.14f) {
@@ -225,29 +225,29 @@ class ColorShader(private val context: Context) {
         GLES20.glLineWidth(10f)
         GLES20.glDrawElements(GLES20.GL_LINES, 6, GLES20.GL_UNSIGNED_BYTE, indexArrayCoordinates);
 
-        setModelMatrix2()
+        setModelMatrixSquare()
         bindMatrix(mViewMatrix, mProjectionMatrix)
         GLES20.glDrawElements(GLES20.GL_TRIANGLES, 6, GLES20.GL_UNSIGNED_BYTE, indexArraySquere);
 
 
         bindDataSphere()
 
-        setModelMatrix1()
+        setModelMatrixChupaChups()
         bindMatrix(mViewMatrix, mProjectionMatrix)
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, sphereVertexCount);
     }
 
-    private fun setModelMatrix1() {
+    private fun setModelMatrixChupaChups() {
         Matrix.setIdentityM(mModelMatrix, 0);
         val angle = (SystemClock.uptimeMillis() % TIME).toFloat() / TIME * 360
 
-        Matrix.translateM(mModelMatrix, 0, 0f, 0f, 2f);
+        Matrix.translateM(mModelMatrix, 0, 0f, 0f, 6f);
         Matrix.rotateM(mModelMatrix, 0, angle, 1f, 1f, 0f)
     }
 
-    private fun setModelMatrix2() {
+    private fun setModelMatrixSquare() {
         Matrix.setIdentityM(mModelMatrix, 0);
-//        Matrix.scaleM(mModelMatrix, 0, 0.5f, 0.5f, 0.5f);
-        Matrix.translateM(mModelMatrix, 0, 0f, 0f, -1f);
+        Matrix.scaleM(mModelMatrix, 0, 0.5f, 0.5f, 0.5f);
+        Matrix.translateM(mModelMatrix, 0, 0f, 0f, 8f);
     }
 }

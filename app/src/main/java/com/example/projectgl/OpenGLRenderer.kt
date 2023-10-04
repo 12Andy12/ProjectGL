@@ -50,13 +50,13 @@ class OpenGLRenderer(private val context: Context) : GLSurfaceView.Renderer {
     }
 
     private fun createProjectionMatrix(width: Int, height: Int) {
-        var ratio = 1f
+        var ratio: Float
         var left = -1f
         var right = 1f
         var bottom = -1f
         var top = 1f
         val near = 2f
-        val far = 8f
+        val far = 16f
         if (width > height) {
             ratio = width.toFloat() / height
             left *= ratio
@@ -70,13 +70,14 @@ class OpenGLRenderer(private val context: Context) : GLSurfaceView.Renderer {
     }
 
     private fun createViewMatrix() {
-        val time = (SystemClock.uptimeMillis() % TIME).toFloat() / TIME
+        val t = TIME * 3
+        val time = (SystemClock.uptimeMillis() % t).toFloat() / t
         val angle: Double = time * 2 * 3.1415926
 
         // точка положения камеры
-        val eyeX = (cos(angle) * 4f).toFloat();
+        val eyeX = (cos(angle) * 6f).toFloat();
         val eyeY = 2f //(cos(angle) * 3f).toFloat();
-        val eyeZ = (sin(angle) * 4f).toFloat();
+        val eyeZ = (sin(angle) * 6f).toFloat();
 
         // точка направления камеры
         val centerX = 0f
