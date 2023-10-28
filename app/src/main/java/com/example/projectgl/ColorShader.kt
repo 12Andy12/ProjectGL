@@ -241,7 +241,7 @@ class ColorShader(private val context: Context) {
         Matrix.setIdentityM(mModelMatrix, 0);
         val angle = (SystemClock.uptimeMillis() % TIME).toFloat() / TIME * 360
 
-        Matrix.translateM(mModelMatrix, 0, 0f, 0f, 6f);
+        Matrix.translateM(mModelMatrix, 0, 0f, 0f, -6f);
         Matrix.rotateM(mModelMatrix, 0, angle, 1f, 1f, 0f)
     }
 

@@ -24,19 +24,21 @@ class OpenGLRenderer(private val context: Context) : GLSurfaceView.Renderer {
 
     private val mProjectionMatrix = FloatArray(16)
     private val mViewMatrix = FloatArray(16)
-
+    public var eyeX = 0.0f
+    public var eyeY = 0.0f
+    public var eyeZ = 0.0f
     private val TIME: Long = 10000
 
     private lateinit var colorShader : ColorShader
     private lateinit var textureShader : TextureShader
-
-
+    private lateinit var lightingShader : LightingShader
 
     override fun onSurfaceCreated(arg0: GL10, arg1: EGLConfig) {
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
         GLES20.glClearColor(0f, 0f, 0f, 1f)
         colorShader = ColorShader(context)
         textureShader = TextureShader(context)
+        lightingShader = LightingShader(context, this)
 
         createViewMatrix()
     }
@@ -75,9 +77,9 @@ class OpenGLRenderer(private val context: Context) : GLSurfaceView.Renderer {
         val angle: Double = time * 2 * 3.1415926
 
         // точка положения камеры
-        val eyeX = (cos(angle) * 6f).toFloat();
-        val eyeY = 2f //(cos(angle) * 3f).toFloat();
-        val eyeZ = (sin(angle) * 6f).toFloat();
+        eyeX = (cos(angle) * 6f).toFloat();
+        eyeY = 2f //(cos(angle) * 3f).toFloat();
+        eyeZ = (sin(angle) * 6f).toFloat();
 
         // точка направления камеры
         val centerX = 0f
@@ -97,7 +99,10 @@ class OpenGLRenderer(private val context: Context) : GLSurfaceView.Renderer {
         createViewMatrix();
 
         textureShader.draw(mViewMatrix, mProjectionMatrix)
-        colorShader.draw(mViewMatrix, mProjectionMatrix)
+        var m = textureShader.getModelMatrix()
+        lightingShader.setLightMatrix(m)
+        lightingShader.draw(mViewMatrix, mProjectionMatrix)
+//        colorShader.draw(mViewMatrix, mProjectionMatrix)
     }
 
 

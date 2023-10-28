@@ -255,37 +255,42 @@ class TextureShader(private val context: Context) {
     {
         GLES20.glUseProgram(programId)
         Matrix.setIdentityM(mModelMatrix, 0);
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureBox);
-        bindData()
-        setModelMatrixBox()
-        bindMatrix(mViewMatrix, mProjectionMatrix)
-
-
-
-        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 36, GLES20.GL_UNSIGNED_BYTE, indexArray);
+//        GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureBox);
+//        bindData()
+//        setModelMatrixBox()
+//        bindMatrix(mViewMatrix, mProjectionMatrix)
+//
+//
+//
+//        GLES20.glDrawElements(GLES20.GL_TRIANGLES, 36, GLES20.GL_UNSIGNED_BYTE, indexArray);
 
         bindDataSphere()
 
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureEarth);
+//        GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureEarth);
+//        setModelMatrixEarth()
+//        bindMatrix(mViewMatrix, mProjectionMatrix)
+//        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, sphereVertexCount);
+//
+//        GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureTest);
+//        setModelMatrixTest()
+//        bindMatrix(mViewMatrix, mProjectionMatrix)
+//        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, sphereVertexCount);
+
+        GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureSun);
         setModelMatrixEarth()
         bindMatrix(mViewMatrix, mProjectionMatrix)
         GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, sphereVertexCount);
 
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureTest);
-        setModelMatrixTest()
-        bindMatrix(mViewMatrix, mProjectionMatrix)
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, sphereVertexCount);
+//        GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureMoon);
+//        setModelMatrixMoon()
+//        bindMatrix(mViewMatrix, mProjectionMatrix)
+//        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, sphereVertexCount);
 
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureSun);
-        Matrix.setIdentityM(mModelMatrix, 0);
-        bindMatrix(mViewMatrix, mProjectionMatrix)
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, sphereVertexCount);
+    }
 
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_CUBE_MAP, textureMoon);
-        setModelMatrixMoon()
-        bindMatrix(mViewMatrix, mProjectionMatrix)
-        GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, sphereVertexCount);
-
+    public fun getModelMatrix() : FloatArray
+    {
+        return mModelMatrix
     }
 
     private fun setModelMatrixBox() {
