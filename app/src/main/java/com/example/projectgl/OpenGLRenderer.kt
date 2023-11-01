@@ -26,7 +26,11 @@ class OpenGLRenderer(private val context: Context) : GLSurfaceView.Renderer {
     private val mViewMatrix = FloatArray(16)
     public var eyeX = 0.0f
     public var eyeY = 0.0f
-    public var eyeZ = 0.0f
+    public var eyeZ = 3.0f
+    public var vX = 0f
+    public var vY = 1f
+    public var vZ = 0f
+
     private val TIME: Long = 10000
 
     private lateinit var colorShader : ColorShader
@@ -77,9 +81,12 @@ class OpenGLRenderer(private val context: Context) : GLSurfaceView.Renderer {
         val angle: Double = time * 2 * 3.1415926
 
         // точка положения камеры
-        eyeX = (cos(angle) * 6f).toFloat();
-        eyeY = 2f //(cos(angle) * 3f).toFloat();
-        eyeZ = (sin(angle) * 6f).toFloat();
+//        eyeX = (cos(angle) * 6f).toFloat();
+//        eyeY = 2f //(cos(angle) * 3f).toFloat();
+//        eyeZ = (sin(angle) * 6f).toFloat();
+        eyeX = 0f;
+        eyeY = 0f //(cos(angle) * 3f).toFloat();
+        eyeZ = 3f
 
         // точка направления камеры
         val centerX = 0f
@@ -87,9 +94,9 @@ class OpenGLRenderer(private val context: Context) : GLSurfaceView.Renderer {
         val centerZ = 0f
 
         // up-вектор
-        val vX = 0f
-        val vY = 1f
-        val vZ = 0f
+        vX = 0f
+        vY = 1f
+        vZ = 0f
         Matrix.setLookAtM(mViewMatrix, 0, eyeX, eyeY, eyeZ, centerX, centerY, centerZ, vX, vY, vZ)
     }
 

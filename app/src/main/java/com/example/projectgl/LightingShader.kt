@@ -27,8 +27,9 @@ class LightingShader(private val context: Context, renderer : OpenGLRenderer) {
     private val lightColor = floatArrayOf(1.0f, 0.81f, 0.5f, 1.0f)
     private val lightOrigin = floatArrayOf(0f, 0f, 0f, 1.0f)
     private var lightPos = floatArrayOf(0f, 0f, 0f, 1.0f)
-    private var viewPos = floatArrayOf(0f, 0f, 0f, 1f)
+    private var viewPos = floatArrayOf(0.0f, 0.0f, 3.0f, 1.0f)
     private var lightMatrix = FloatArray(16)
+    private val mvpMatrix = FloatArray(16)
 
     private val TIME: Long = 10000
 
@@ -183,15 +184,17 @@ class LightingShader(private val context: Context, renderer : OpenGLRenderer) {
         GLES20.glEnableVertexAttribArray(positionLocation)
         GLES20.glEnableVertexAttribArray(normalLocation)
 
-        viewPos[0] = render.eyeX
-        viewPos[1] = render.eyeY
-        viewPos[2] = render.eyeZ
+//        viewPos[0] = render.vX
+//        viewPos[1] = render.vY
+//        viewPos[2] = render.vZ
 
         GLES20.glUniform4fv(colorLocation, 1, color, 0)
         GLES20.glUniform4fv(lightColorLocation, 1, lightColor, 0)
         Matrix.multiplyMV(lightPos, 0, lightMatrix, 0, lightOrigin, 0)
         GLES20.glUniform4fv(lightPosLocation, 1, lightPos, 0)
         GLES20.glUniform4fv(viewPosLocation, 1, viewPos, 0)
+
+
     }
 
     public fun bindMatrix(
@@ -200,7 +203,12 @@ class LightingShader(private val context: Context, renderer : OpenGLRenderer) {
     ) {
         Matrix.multiplyMM(mMatrix, 0, mViewMatrix, 0, mModelMatrix, 0);
         Matrix.multiplyMM(mMatrix, 0, mProjectionMatrix, 0, mMatrix, 0);
+//        GLES20.glUniformMatrix4fv(mvpMatrixLocation, 1, false, mMatrix, 0)
+//        Matrix.setIdentityM(mvpMatrix, 0)
+//        Matrix.multiplyMM(mvpMatrix, 0, mViewMatrix, 0,mModelMatrix , 0);
         GLES20.glUniformMatrix4fv(mvpMatrixLocation, 1, false, mMatrix, 0)
+        GLES20.glUniformMatrix4fv(modelMatrixLocation, 1, false, mModelMatrix, 0)
+
     }
 
     public fun draw(
